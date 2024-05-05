@@ -15,6 +15,7 @@ public class FootballMatchTest {
 
     private Match match;
     private ResultBar resultBar;
+    private Match.MatchChangeHandler handler;
 
     @BeforeAll
     public static void beforeAll() {
@@ -25,7 +26,8 @@ public class FootballMatchTest {
     @BeforeEach
     public void beforeEach() {
         resultBar = mock(ResultBar.class);
-        match = new FootballMatch(resultBar);
+        handler = mock(Match.MatchChangeHandler.class);
+        match = new FootballMatch(resultBar, handler);
     }
 
     @Test
@@ -62,6 +64,7 @@ public class FootballMatchTest {
         match.finish();
 
         Assertions.assertEquals(Match.Status.FINISHED, match.getStatus());
+        verify(handler, times(1)).finalize(any(Match.class));
     }
 
     @Test
@@ -78,6 +81,7 @@ public class FootballMatchTest {
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
 
         Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
+        verify(handler, times(0)).finalize(any(Match.class));
     }
 
     @Test

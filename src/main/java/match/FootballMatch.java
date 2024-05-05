@@ -4,10 +4,12 @@ public class FootballMatch implements Match {
     private Status status;
     private final ResultBar resultBar;
     private int sequenceNo;
+    private MatchChangeHandler handler;
 
-    public FootballMatch(ResultBar resultBar) {
+    public FootballMatch(ResultBar resultBar, MatchChangeHandler handler) {
         this.status = Status.CREATED;
         this.resultBar = resultBar;
+        this.handler = handler;
     }
 
     @Override

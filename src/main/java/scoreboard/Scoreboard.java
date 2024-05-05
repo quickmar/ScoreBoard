@@ -5,7 +5,7 @@ import match.Match;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Scoreboard {
+public class Scoreboard implements Match.MatchChangeHandler {
     private static final AtomicInteger matchSequence = new AtomicInteger();
     private final Set<Match.Team> teams;
     private final List<Match> matches;
@@ -61,4 +61,8 @@ public class Scoreboard {
     };
 
 
+    @Override
+    public void finalize(Match match) {
+        throw new RuntimeException("Not implemented");
+    }
 }

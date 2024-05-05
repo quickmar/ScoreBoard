@@ -20,11 +20,11 @@ public class ScoreboardTest {
     @BeforeEach
     public void beforeEach() {
         scoreboard = new Scoreboard();
-        uruguayItaly = Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("Italy"));
-        spainBrazil = Match.createFootballMatch(new Match.Team("Spain"), new Match.Team("Brazil"));
-        mexicoCanada = Match.createFootballMatch(new Match.Team("Mexico"), new Match.Team("Canada"));
-        argentinaAustralia = Match.createFootballMatch(new Match.Team("Argentina"), new Match.Team("Australia"));
-        germanyFrance = Match.createFootballMatch(new Match.Team("Germany"), new Match.Team("France"));
+        uruguayItaly = Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("Italy"), scoreboard);
+        spainBrazil = Match.createFootballMatch(new Match.Team("Spain"), new Match.Team("Brazil"), scoreboard);
+        mexicoCanada = Match.createFootballMatch(new Match.Team("Mexico"), new Match.Team("Canada"), scoreboard);
+        argentinaAustralia = Match.createFootballMatch(new Match.Team("Argentina"), new Match.Team("Australia"), scoreboard);
+        germanyFrance = Match.createFootballMatch(new Match.Team("Germany"), new Match.Team("France"), scoreboard);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ScoreboardTest {
     public void shouldThrowWhenTeamExist() {
         scoreboard.newMatch(uruguayItaly);
 
-        Assertions.assertThrows(AssertionError.class, () -> scoreboard.newMatch(Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("US"))));
+        Assertions.assertThrows(AssertionError.class, () -> scoreboard.newMatch(Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("US"), scoreboard)));
     }
 
     @Test
@@ -76,6 +76,7 @@ public class ScoreboardTest {
         Assertions.assertEquals(
                 List.of(mexicoCanada.getResult(), spainBrazil.getResult(), germanyFrance.getResult(), argentinaAustralia.getResult()),
                 scoreboard.getSummary());
+
     }
 
     @Test
