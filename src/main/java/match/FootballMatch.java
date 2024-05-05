@@ -1,9 +1,15 @@
 package match;
 
 public class FootballMatch implements Match {
+    private Status status;
+
+    public FootballMatch() {
+        this.status = Status.RUNNING;
+    }
+
     @Override
     public void finish() {
-        throw new RuntimeException("Not implemented");
+        status = Status.FINISHED;
     }
 
     @Override
@@ -18,7 +24,7 @@ public class FootballMatch implements Match {
 
     @Override
     public Status getStatus() {
-        return null;
+        return status;
     }
 
     @Override
