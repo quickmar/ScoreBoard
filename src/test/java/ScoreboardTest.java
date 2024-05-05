@@ -108,7 +108,7 @@ public class ScoreboardTest {
         germanyFrance.updateScore(2, 6);
 
         Assertions.assertEquals(
-                List.of(argentinaAustralia.getResult(), uruguayItaly.getResult(), mexicoCanada.getResult(), spainBrazil.getResult(), germanyFrance.getResult()),
+                List.of(uruguayItaly.getResult(), spainBrazil.getResult(), mexicoCanada.getResult(), argentinaAustralia.getResult(), germanyFrance.getResult()),
                 scoreboard.getSummary());
     }
 
