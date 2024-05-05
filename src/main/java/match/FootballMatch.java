@@ -3,10 +3,18 @@ package match;
 public class FootballMatch implements Match {
     private Status status;
     private final ResultBar resultBar;
+    private int sequenceNo;
 
     public FootballMatch(ResultBar resultBar) {
-        this.status = Status.RUNNING;
+        this.status = Status.CREATED;
         this.resultBar = resultBar;
+    }
+
+    @Override
+    public void begin(int sequenceNo) throws NotModifalbleMatchException {
+        if (!status.equals(Status.CREATED)) throw new NotModifalbleMatchException(this);
+        this.sequenceNo = sequenceNo;
+        this.status = Status.RUNNING;
     }
 
     @Override
@@ -15,9 +23,9 @@ public class FootballMatch implements Match {
     }
 
     @Override
-    public void updateScore(int homeTeamScore, int awayTeamScore) throws NotModifalbleAfterFinishException {
-        if (status.equals(Status.FINISHED)) {
-            throw new NotModifalbleAfterFinishException(this);
+    public void updateScore(int homeTeamScore, int awayTeamScore) throws NotModifalbleMatchException {
+        if (!status.equals(Status.RUNNING)) {
+            throw new NotModifalbleMatchException(this);
         }
         this.resultBar.setHomeTeamScore(homeTeamScore);
         this.resultBar.setAwayTeamScore(awayTeamScore);
@@ -35,7 +43,7 @@ public class FootballMatch implements Match {
 
     @Override
     public String getDescription() {
-        var summary = resultBar.getResultSummary();
+        var summary = getResult();
         return new StringBuilder()
                 .append(summary.homeTeam().name())
                 .append(" ")
@@ -45,5 +53,10 @@ public class FootballMatch implements Match {
                 .append(" ")
                 .append(summary.awayTeamScore())
                 .toString();
+    }
+
+    @Override
+    public int getSequenceNumber() {
+        return sequenceNo;
     }
 }

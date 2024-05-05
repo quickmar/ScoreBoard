@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
@@ -28,7 +29,9 @@ public class FootballMatchTest {
     }
 
     @Test
-    public void shouldUpdatesScore() throws Match.NotModifalbleAfterFinishException {
+    public void shouldUpdatesScore() throws Match.NotModifalbleMatchException {
+        match.begin(0);
+
         match.updateScore(1, 1);
 
         verify(resultBar, times(1)).setHomeTeamScore(anyInt());
@@ -36,7 +39,21 @@ public class FootballMatchTest {
     }
 
     @Test
+    public void shouldThrowWhenUpdatesScoreOnNotStartedMatch() throws Match.NotModifalbleMatchException {
+        when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
+
+        Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
+    }
+
+    @Test
     public void shouldGetInitialStatus() {
+        Assertions.assertEquals(Match.Status.CREATED, match.getStatus());
+    }
+
+    @Test
+    public void shouldBeginMatch() throws Match.NotModifalbleMatchException {
+        match.begin(0);
+
         Assertions.assertEquals(Match.Status.RUNNING, match.getStatus());
     }
 
@@ -48,12 +65,19 @@ public class FootballMatchTest {
     }
 
     @Test
-    public void shouldNotInvokeMethodAfterFinish() {
+    public void shouldNotUpdateScoreBeforeBegin() {
+        when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
+
+        Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
+    }
+
+    @Test
+    public void shouldNotUpdateScoreAfterFinish() {
         match.finish();
 
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
 
-        Assertions.assertThrows(Match.NotModifalbleAfterFinishException.class, () -> match.updateScore(1, 1));
+        Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
     }
 
     @Test

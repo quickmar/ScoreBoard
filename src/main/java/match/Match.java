@@ -14,9 +14,9 @@ public interface Match {
     /**
      * Exception that is thrown whenever state of {@link Match} is changed after it is over.
      */
-    class NotModifalbleAfterFinishException extends Exception {
-        public NotModifalbleAfterFinishException(Match match) {
-            super(match.getDescription() + " has been finished. Can not update state of this match.");
+    class NotModifalbleMatchException extends Exception {
+        public NotModifalbleMatchException(Match match) {
+            super("The match: " + match.getDescription() + " is in status: " + match.getStatus() + " and can not be modified.");
         }
     }
 
@@ -35,12 +35,19 @@ public interface Match {
      * @param awayTeamScore Score of the away team
      */
     record Result(Team homeTeam, Team awayTeam, int homeTeamScore, int awayTeamScore) {
+        public int totalScore() {
+            return homeTeamScore + awayTeamScore;
+        }
     }
 
     /**
      * Describe current state of the {@link Match}.
      */
     enum Status {
+        /**
+         * {@link Match} is created. After is started changes to {@link Match} are not possible.
+         */
+        CREATED,
         /**
          * {@link Match} is in progress. Changes to the {@link Match} state are possible.
          */
@@ -50,6 +57,11 @@ public interface Match {
          */
         FINISHED
     }
+
+    /**
+     * Starts the match. And set {@link Status} to RUNNING
+     */
+    void begin(int sequenceNo) throws NotModifalbleMatchException;
 
     /**
      * Ends the match. And set {@link Status} to FINISHED
@@ -62,7 +74,7 @@ public interface Match {
      * @param homeTeamScore New score of the home team
      * @param awayTeamScore New score of the away team
      */
-    void updateScore(int homeTeamScore, int awayTeamScore) throws NotModifalbleAfterFinishException;
+    void updateScore(int homeTeamScore, int awayTeamScore) throws NotModifalbleMatchException;
 
     /**
      * Gets current result of the match
@@ -86,4 +98,12 @@ public interface Match {
      * @return {@link Match} description
      */
     String getDescription();
+
+    /**
+     * Gets time stamp of creation of this {@link Match}
+     *
+     * @return integer value representing creation time of this {@link Match}
+     */
+    int getSequenceNumber();
+
 }
