@@ -35,6 +35,7 @@ public class ResultBar {
      * Sets new score of Home Team.
      */
     public void setHomeTeamScore(int homeTeamScore) {
+        assertScoreNotSmaller(this.homeTeamScore, homeTeamScore);
         this.homeTeamScore = homeTeamScore;
     }
 
@@ -42,6 +43,11 @@ public class ResultBar {
      * Sets new score of Away Team.
      */
     public void setAwayTeamScore(int awayTeamScore) {
+        assertScoreNotSmaller(this.awayTeamScore, awayTeamScore);
         this.awayTeamScore = awayTeamScore;
+    }
+
+    private static void assertScoreNotSmaller(int currentScore, int newScore) {
+        assert newScore - currentScore > 0;
     }
 }
