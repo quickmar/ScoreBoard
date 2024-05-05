@@ -7,6 +7,10 @@ package match;
  */
 public interface Match {
 
+    static FootballMatch createFootballMatch(Team homeTeam, Team awayTeam) {
+        return new FootballMatch(new ResultBar(homeTeam, awayTeam));
+    }
+
     /**
      * Exception that is thrown whenever state of {@link Match} is changed after it is over.
      */
