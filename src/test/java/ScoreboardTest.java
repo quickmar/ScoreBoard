@@ -40,6 +40,20 @@ public class ScoreboardTest {
     }
 
     @Test
+    public void shouldBeginMatch() throws Match.NotModifalbleMatchException {
+        var newMatch = mock(Match.class);
+        when(newMatch.getStatus()).thenReturn(Match.Status.CREATED);
+        when(newMatch.getResult())
+                .thenReturn(new Match.Result(
+                        new Match.Team("Home Team"),
+                        new Match.Team("Away Team"), 0, 0));
+
+        scoreboard.newMatch(newMatch);
+
+        verify(newMatch, times(1)).begin(anyInt());
+    }
+
+    @Test
     public void shouldThrowWhenMatchExist() {
         scoreboard.newMatch(uruguayItaly);
 
