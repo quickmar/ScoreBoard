@@ -47,7 +47,7 @@ public class Scoreboard {
         return match.getResult().totalScore();
     }
 
-    private static Comparator<Match> totalScoreThenSeqenceNoComparator = (Match m1, Match m2) -> {
+    private static final Comparator<Match> totalScoreThenSeqenceNoComparator = (Match m1, Match m2) -> {
         var m1TotalScore = getTotalScore(m1);
         var m2TotalScore = getTotalScore(m2);
         var m1SequenceNumber = m1.getSequenceNumber();

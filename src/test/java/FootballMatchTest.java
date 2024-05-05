@@ -39,7 +39,7 @@ public class FootballMatchTest {
     }
 
     @Test
-    public void shouldThrowWhenUpdatesScoreOnNotStartedMatch() throws Match.NotModifalbleMatchException {
+    public void shouldThrowWhenUpdatesScoreOnNotStartedMatch() {
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
 
         Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));

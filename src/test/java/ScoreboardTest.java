@@ -8,7 +8,6 @@ import static org.mockito.Mockito.*;
 import scoreboard.Scoreboard;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 public class ScoreboardTest {
     private Scoreboard scoreboard;
@@ -126,13 +125,4 @@ public class ScoreboardTest {
         scoreboard.newMatch(uruguayItaly);
         scoreboard.newMatch(argentinaAustralia);
     }
-
-    private void logMatches() {
-        System.out.println(mexicoCanada.getSequenceNumber() + " " + mexicoCanada.getResult().totalScore());
-        System.out.println(spainBrazil.getSequenceNumber() + " " + spainBrazil.getResult().totalScore());
-        System.out.println(germanyFrance.getSequenceNumber() + " " + germanyFrance.getResult().totalScore());
-        System.out.println(uruguayItaly.getSequenceNumber() + " " + uruguayItaly.getResult().totalScore());
-        System.out.println(argentinaAustralia.getSequenceNumber() + " " + argentinaAustralia.getResult().totalScore());
-    }
-
 }
