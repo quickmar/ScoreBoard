@@ -74,7 +74,7 @@ public class ScoreboardTest {
         uruguayItaly.finish();
 
         Assertions.assertEquals(
-                List.of(mexicoCanada.getResult(), spainBrazil.getResult(), germanyFrance.getResult(), argentinaAustralia.getResult()),
+                List.of(argentinaAustralia.getResult(), germanyFrance.getResult(), spainBrazil.getResult(), mexicoCanada.getResult()),
                 scoreboard.getSummary());
 
     }
@@ -84,7 +84,7 @@ public class ScoreboardTest {
         initialiseMatches();
 
         Assertions.assertEquals(
-                List.of(mexicoCanada.getResult(), spainBrazil.getResult(), germanyFrance.getResult(), uruguayItaly.getResult(), argentinaAustralia.getResult()),
+                List.of(argentinaAustralia.getResult(), uruguayItaly.getResult(), germanyFrance.getResult(), spainBrazil.getResult(), mexicoCanada.getResult()),
                 scoreboard.getSummary());
     }
 

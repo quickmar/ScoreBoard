@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Scoreboard implements Match.MatchChangeHandler {
-    private static final AtomicInteger matchSequence = new AtomicInteger();
+    private final AtomicInteger matchSequence = new AtomicInteger();
     private final Set<Match.Team> teams;
     private final List<Match> matches;
 
@@ -31,6 +31,14 @@ public class Scoreboard implements Match.MatchChangeHandler {
                 .sorted(totalScoreThenSeqenceNoComparator)
                 .map(Match::getResult)
                 .toList();
+    }
+
+    @Override
+    public void finalize(Match match) {
+        var result = match.getResult();
+        teams.remove(result.homeTeam());
+        teams.remove(result.awayTeam());
+        matches.remove(match);
     }
 
     private void addTeam(Match.Team team) {
@@ -59,13 +67,4 @@ public class Scoreboard implements Match.MatchChangeHandler {
             return Long.compare(m2SequenceNumber, m1SequenceNumber);
         }
     };
-
-
-    @Override
-    public void finalize(Match match) {
-        var result = match.getResult();
-        teams.remove(result.homeTeam());
-        teams.remove(result.awayTeam());
-        matches.remove(match);
-    }
 }
