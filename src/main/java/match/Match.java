@@ -79,7 +79,7 @@ public interface Match {
     /**
      * Ends the match. And set {@link Status} to FINISHED
      */
-    void finish();
+    void finish() throws NotModifalbleMatchException;
 
     /**
      * Overrides values of the team scores

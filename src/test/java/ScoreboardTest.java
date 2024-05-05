@@ -68,7 +68,7 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void shouldRemoveTeamWhenMatchFinished() {
+    public void shouldRemoveTeamWhenMatchFinished() throws Match.NotModifalbleMatchException {
         initialiseMatches();
 
         uruguayItaly.finish();

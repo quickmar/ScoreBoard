@@ -60,7 +60,9 @@ public class FootballMatchTest {
     }
 
     @Test
-    public void shouldFishTheMatch() {
+    public void shouldFishTheMatch() throws Match.NotModifalbleMatchException {
+        match.begin(0);
+
         match.finish();
 
         Assertions.assertEquals(Match.Status.FINISHED, match.getStatus());
@@ -75,13 +77,14 @@ public class FootballMatchTest {
     }
 
     @Test
-    public void shouldNotUpdateScoreAfterFinish() {
-        match.finish();
+    public void shouldNotUpdateScoreAfterFinish() throws Match.NotModifalbleMatchException {
+        match.begin(0);
 
+        match.finish();
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
 
         Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
-        verify(handler, times(0)).finalize(any(Match.class));
+        verify(handler, times(1)).finalize(any(Match.class));
     }
 
     @Test

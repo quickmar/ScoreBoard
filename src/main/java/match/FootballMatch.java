@@ -20,8 +20,11 @@ public class FootballMatch implements Match {
     }
 
     @Override
-    public void finish() {
+    public void finish() throws NotModifalbleMatchException {
+        if (!status.equals(Status.RUNNING)) throw new NotModifalbleMatchException(this);
+        this.handler.finalize(this);
         status = Status.FINISHED;
+        this.handler = null;
     }
 
     @Override
