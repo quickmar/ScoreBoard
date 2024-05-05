@@ -63,6 +63,9 @@ public class Scoreboard implements Match.MatchChangeHandler {
 
     @Override
     public void finalize(Match match) {
-        throw new RuntimeException("Not implemented");
+        var result = match.getResult();
+        teams.remove(result.homeTeam());
+        teams.remove(result.awayTeam());
+        matches.remove(match);
     }
 }
