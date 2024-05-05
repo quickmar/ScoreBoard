@@ -48,6 +48,6 @@ public class ResultBar {
     }
 
     private static void assertScoreNotSmaller(int currentScore, int newScore) {
-        assert newScore - currentScore > 0;
+        assert newScore - currentScore >= 0;
     }
 }
