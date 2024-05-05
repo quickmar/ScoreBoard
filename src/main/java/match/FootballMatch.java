@@ -35,6 +35,15 @@ public class FootballMatch implements Match {
 
     @Override
     public String getDescription() {
-        return "";
+        var summary = resultBar.getResultSummary();
+        return new StringBuilder()
+                .append(summary.homeTeam().name())
+                .append(" ")
+                .append(summary.homeTeamScore())
+                .append(" - ")
+                .append(summary.awayTeam().name())
+                .append(" ")
+                .append(summary.awayTeamScore())
+                .toString();
     }
 }

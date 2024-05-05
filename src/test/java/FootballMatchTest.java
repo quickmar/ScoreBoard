@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 public class FootballMatchTest {
     private static Match.Team HOME_TEAM;
@@ -22,22 +23,16 @@ public class FootballMatchTest {
 
     @BeforeEach
     public void beforeEach() {
-        resultBar = Mockito.mock(ResultBar.class);
+        resultBar = mock(ResultBar.class);
         match = new FootballMatch(resultBar);
-    }
-
-    @Test
-    public void shouldGetInitialResult() {
-        Assertions.assertEquals(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0), match.getResult());
     }
 
     @Test
     public void shouldUpdatesScore() throws Match.NotModifalbleAfterFinishException {
         match.updateScore(1, 1);
 
-        var result = match.getResult();
-        Assertions.assertInstanceOf(Match.Result.class, result);
-        Assertions.assertEquals(new Match.Result(HOME_TEAM, AWAY_TEAM, 1, 1), result);
+        verify(resultBar, times(1)).setHomeTeamScore(anyInt());
+        verify(resultBar, times(1)).setAwayTeamScore(anyInt());
     }
 
     @Test
@@ -56,11 +51,15 @@ public class FootballMatchTest {
     public void shouldNotInvokeMethodAfterFinish() {
         match.finish();
 
+        when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
+
         Assertions.assertThrows(Match.NotModifalbleAfterFinishException.class, () -> match.updateScore(1, 1));
     }
 
     @Test
     public void shouldGetMatchDescription() {
+        when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
+
         Assertions.assertEquals("Home Team 0 - Away Team 0", match.getDescription());
     }
 
