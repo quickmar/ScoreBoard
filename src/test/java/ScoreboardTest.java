@@ -31,6 +31,11 @@ public class ScoreboardTest {
     public void shouldAddNewMatch() {
         var newMatch = mock(Match.class);
 
+        when(newMatch.getResult())
+                .thenReturn(new Match.Result(
+                        new Match.Team("Home Team"),
+                        new Match.Team("Away Team"), 0, 0));
+
         Assertions.assertDoesNotThrow(() -> scoreboard.newMatch(newMatch));
     }
 
@@ -65,7 +70,7 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void shouldSummariseMatchesByTotalScore() throws Match.NotModifalbleAfterFinishException {
+    public void shouldSummariseMatchesByTotalScore() throws Match.NotModifalbleMatchException {
         initialiseMatches();
 
         uruguayItaly.updateScore(2, 1);
@@ -79,7 +84,7 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void shouldSummariseMatchesByTotalScoreAndMostRecent() throws Match.NotModifalbleAfterFinishException {
+    public void shouldSummariseMatchesByTotalScoreAndMostRecent() throws Match.NotModifalbleMatchException {
         initialiseMatches();
 
         uruguayItaly.updateScore(6, 6);
