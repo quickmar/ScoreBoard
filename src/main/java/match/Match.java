@@ -35,7 +35,7 @@ public interface Match {
      */
     class NotModifalbleMatchException extends Exception {
         public NotModifalbleMatchException(Match match) {
-            super("The match: " + match.getDescription() + " is in status: " + match.getStatus() + " and can not be modified.");
+            super("The match: " + match.getResult().description() + " is in status: " + match.getStatus() + " and can not be modified.");
         }
     }
 
@@ -54,8 +54,32 @@ public interface Match {
      * @param awayTeamScore Score of the away team
      */
     record Result(Team homeTeam, Team awayTeam, int homeTeamScore, int awayTeamScore) {
+        /**
+         * Calculate total of Home {@link Team} Score and Away {@link Team} Score
+         *
+         * @return sum of teams scores
+         */
         public int totalScore() {
             return homeTeamScore + awayTeamScore;
+        }
+
+        /**
+         * Gets description of the {@link Match} in format HomeTeam int - AwayTeam int.
+         * For example, when Uruguay plays against Italy and the result is 1-1,
+         * then the description should be in "Uruguay 1 - Italy 1"
+         *
+         * @return {@link Match} description
+         */
+        public String description() {
+            return new StringBuilder()
+                    .append(homeTeam.name())
+                    .append(" ")
+                    .append(homeTeamScore)
+                    .append(" - ")
+                    .append(awayTeam.name())
+                    .append(" ")
+                    .append(awayTeamScore)
+                    .toString();
         }
     }
 
@@ -108,13 +132,4 @@ public interface Match {
      * @return {@link Status}
      */
     Status getStatus();
-
-    /**
-     * Gets description of the {@link Match} in format HomeTeam int - AwayTeam int.
-     * For example, when Uruguay plays against Italy and the result is 1-1,
-     * then the description should be in "Uruguay 1 - Italy 1"
-     *
-     * @return {@link Match} description
-     */
-    String getDescription();
 }

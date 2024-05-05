@@ -44,18 +44,4 @@ public class FootballMatch implements Match {
     public Status getStatus() {
         return status;
     }
-
-    @Override
-    public String getDescription() {
-        var summary = getResult();
-        return new StringBuilder()
-                .append(summary.homeTeam().name())
-                .append(" ")
-                .append(summary.homeTeamScore())
-                .append(" - ")
-                .append(summary.awayTeam().name())
-                .append(" ")
-                .append(summary.awayTeamScore())
-                .toString();
-    }
 }

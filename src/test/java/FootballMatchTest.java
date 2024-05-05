@@ -92,7 +92,7 @@ public class FootballMatchTest {
     public void shouldGetMatchDescription() {
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
 
-        Assertions.assertEquals("Home Team 0 - Away Team 0", match.getDescription());
+        Assertions.assertEquals("Home Team 0 - Away Team 0", match.getResult().description());
     }
 
 }
