@@ -3,7 +3,6 @@ package match;
 public class FootballMatch implements Match {
     private Status status;
     private final ResultBar resultBar;
-    private int sequenceNo;
     private MatchChangeHandler handler;
 
     public FootballMatch(ResultBar resultBar, MatchChangeHandler handler) {
@@ -13,10 +12,10 @@ public class FootballMatch implements Match {
     }
 
     @Override
-    public void begin(int sequenceNo) throws NotModifalbleMatchException {
+    public void begin() throws NotModifalbleMatchException {
         if (!status.equals(Status.CREATED)) throw new NotModifalbleMatchException(this);
-        this.sequenceNo = sequenceNo;
         this.status = Status.RUNNING;
+        this.handler.onBegin(this);
     }
 
     @Override
@@ -58,10 +57,5 @@ public class FootballMatch implements Match {
                 .append(" ")
                 .append(summary.awayTeamScore())
                 .toString();
-    }
-
-    @Override
-    public int getSequenceNumber() {
-        return sequenceNo;
     }
 }

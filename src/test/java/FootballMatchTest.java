@@ -32,7 +32,7 @@ public class FootballMatchTest {
 
     @Test
     public void shouldUpdatesScore() throws Match.NotModifalbleMatchException {
-        match.begin(0);
+        match.begin();
 
         match.updateScore(1, 1);
 
@@ -54,14 +54,15 @@ public class FootballMatchTest {
 
     @Test
     public void shouldBeginMatch() throws Match.NotModifalbleMatchException {
-        match.begin(0);
+        match.begin();
 
         Assertions.assertEquals(Match.Status.RUNNING, match.getStatus());
+        verify(handler, times(1)).onBegin(any(Match.class));
     }
 
     @Test
     public void shouldFishTheMatch() throws Match.NotModifalbleMatchException {
-        match.begin(0);
+        match.begin();
 
         match.finish();
 
@@ -78,7 +79,7 @@ public class FootballMatchTest {
 
     @Test
     public void shouldNotUpdateScoreAfterFinish() throws Match.NotModifalbleMatchException {
-        match.begin(0);
+        match.begin();
 
         match.finish();
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));

@@ -36,35 +36,22 @@ public class ScoreboardTest {
                         new Match.Team("Home Team"),
                         new Match.Team("Away Team"), 0, 0));
 
-        Assertions.assertDoesNotThrow(() -> scoreboard.newMatch(newMatch));
+        Assertions.assertDoesNotThrow(() -> scoreboard.onBegin(newMatch));
+    }
+
+
+    @Test
+    public void shouldThrowWhenMatchExist() throws Match.NotModifalbleMatchException {
+        uruguayItaly.begin();
+
+        Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> uruguayItaly.begin());
     }
 
     @Test
-    public void shouldBeginMatch() throws Match.NotModifalbleMatchException {
-        var newMatch = mock(Match.class);
-        when(newMatch.getStatus()).thenReturn(Match.Status.CREATED);
-        when(newMatch.getResult())
-                .thenReturn(new Match.Result(
-                        new Match.Team("Home Team"),
-                        new Match.Team("Away Team"), 0, 0));
+    public void shouldThrowWhenTeamExist() throws Match.NotModifalbleMatchException {
+        uruguayItaly.begin();
 
-        scoreboard.newMatch(newMatch);
-
-        verify(newMatch, times(1)).begin(anyInt());
-    }
-
-    @Test
-    public void shouldThrowWhenMatchExist() {
-        scoreboard.newMatch(uruguayItaly);
-
-        Assertions.assertThrows(AssertionError.class, () -> scoreboard.newMatch(uruguayItaly));
-    }
-
-    @Test
-    public void shouldThrowWhenTeamExist() {
-        scoreboard.newMatch(uruguayItaly);
-
-        Assertions.assertThrows(AssertionError.class, () -> scoreboard.newMatch(Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("US"), scoreboard)));
+        Assertions.assertThrows(AssertionError.class, () -> Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("US"), scoreboard).begin());
     }
 
     @Test
@@ -120,10 +107,14 @@ public class ScoreboardTest {
 
 
     private void initialiseMatches() {
-        scoreboard.newMatch(mexicoCanada);
-        scoreboard.newMatch(spainBrazil);
-        scoreboard.newMatch(germanyFrance);
-        scoreboard.newMatch(uruguayItaly);
-        scoreboard.newMatch(argentinaAustralia);
+        try {
+            mexicoCanada.begin();
+            spainBrazil.begin();
+            germanyFrance.begin();
+            uruguayItaly.begin();
+            argentinaAustralia.begin();
+        } catch (Match.NotModifalbleMatchException e) {
+            Assertions.fail(e);
+        }
     }
 }

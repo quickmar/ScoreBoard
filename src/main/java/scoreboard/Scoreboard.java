@@ -6,7 +6,9 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Scoreboard implements Match.MatchChangeHandler {
-    private final AtomicInteger matchSequence = new AtomicInteger();
+    private record MatchWithIndex(int index, Match match) {
+    }
+
     private final Set<Match.Team> teams;
     private final List<Match> matches;
 
@@ -15,7 +17,18 @@ public class Scoreboard implements Match.MatchChangeHandler {
         matches = new LinkedList<>();
     }
 
-    public void newMatch(Match match) {
+    public List<Match.Result> getSummary() {
+        var sequence = new AtomicInteger();
+        return matches.stream()
+                .map((match -> new MatchWithIndex(sequence.getAndIncrement(), match)))
+                .sorted(totalScoreThenSeqenceNoComparator)
+                .map(MatchWithIndex::match)
+                .map(Match::getResult)
+                .toList();
+    }
+
+    @Override
+    public void onBegin(Match match) {
         try {
             var summary = match.getResult();
             addTeam(summary.homeTeam());
@@ -24,13 +37,6 @@ public class Scoreboard implements Match.MatchChangeHandler {
         } catch (Match.NotModifalbleMatchException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public List<Match.Result> getSummary() {
-        return matches.stream()
-                .sorted(totalScoreThenSeqenceNoComparator)
-                .map(Match::getResult)
-                .toList();
     }
 
     @Override
@@ -47,19 +53,18 @@ public class Scoreboard implements Match.MatchChangeHandler {
     }
 
     private void addMatch(Match match) throws Match.NotModifalbleMatchException {
-        match.begin(matchSequence.getAndIncrement());
-        matches.add(match);
+        matches.addLast(match);
     }
 
     private static int getTotalScore(Match match) {
         return match.getResult().totalScore();
     }
 
-    private static final Comparator<Match> totalScoreThenSeqenceNoComparator = (Match m1, Match m2) -> {
-        var m1TotalScore = getTotalScore(m1);
-        var m2TotalScore = getTotalScore(m2);
-        var m1SequenceNumber = m1.getSequenceNumber();
-        var m2SequenceNumber = m2.getSequenceNumber();
+    private static final Comparator<MatchWithIndex> totalScoreThenSeqenceNoComparator = (MatchWithIndex m1, MatchWithIndex m2) -> {
+        var m1TotalScore = getTotalScore(m1.match());
+        var m2TotalScore = getTotalScore(m2.match());
+        var m1SequenceNumber = m1.index();
+        var m2SequenceNumber = m2.index();
 
         if (m1TotalScore != m2TotalScore) {
             return m2TotalScore - m1TotalScore;
