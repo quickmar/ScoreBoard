@@ -17,12 +17,20 @@ public interface Match {
     }
 
     /**
+     * Represents a Football Team
+     *
+     * @param name Name of the team
+     */
+    record Team(String name) {
+    }
+
+    /**
      * Represents a current state of the result of the {@link Match}
      *
      * @param homeTeamScore Score of the home team
      * @param awayTeamScore Score of the away team
      */
-    record Result(int homeTeamScore, int awayTeamScore) {
+    record Result(Team homeTeam, Team awayTeam, int homeTeamScore, int awayTeamScore) {
     }
 
     /**

@@ -2,9 +2,11 @@ package match;
 
 public class FootballMatch implements Match {
     private Status status;
+    private final ResultBar resultBar;
 
-    public FootballMatch() {
+    public FootballMatch(ResultBar resultBar) {
         this.status = Status.RUNNING;
+        this.resultBar = resultBar;
     }
 
     @Override
@@ -13,13 +15,17 @@ public class FootballMatch implements Match {
     }
 
     @Override
-    public void updateScore(int homeTeamScore, int awayTeamScore) {
-        throw new RuntimeException("Not implemented");
+    public void updateScore(int homeTeamScore, int awayTeamScore) throws NotModifalbleAfterFinishException {
+        if (status.equals(Status.FINISHED)) {
+            throw new NotModifalbleAfterFinishException(this);
+        }
+        this.resultBar.setHomeTeamScore(homeTeamScore);
+        this.resultBar.setAwayTeamScore(awayTeamScore);
     }
 
     @Override
     public Result getResult() {
-        return null;
+        return resultBar.getResultSummary();
     }
 
     @Override
