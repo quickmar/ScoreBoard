@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 import scoreboard.Scoreboard;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ScoreboardTest {
     private Scoreboard scoreboard;
@@ -81,6 +82,10 @@ public class ScoreboardTest {
     @Test
     public void shouldSummariseMatchesByMostRecent() {
         initialiseMatches();
+
+        Assertions.assertEquals(
+                List.of(mexicoCanada.getResult(), spainBrazil.getResult(), germanyFrance.getResult(), uruguayItaly.getResult(), argentinaAustralia.getResult()),
+                scoreboard.getSummary());
     }
 
     @Test
@@ -105,7 +110,8 @@ public class ScoreboardTest {
         spainBrazil.updateScore(10, 2);
         mexicoCanada.updateScore(0, 5);
         argentinaAustralia.updateScore(3, 1);
-        germanyFrance.updateScore(2, 6);
+        germanyFrance.updateScore(2, 2);
+
 
         Assertions.assertEquals(
                 List.of(uruguayItaly.getResult(), spainBrazil.getResult(), mexicoCanada.getResult(), argentinaAustralia.getResult(), germanyFrance.getResult()),
@@ -119,11 +125,14 @@ public class ScoreboardTest {
         scoreboard.newMatch(germanyFrance);
         scoreboard.newMatch(uruguayItaly);
         scoreboard.newMatch(argentinaAustralia);
+    }
 
-
-        Assertions.assertEquals(
-                List.of(mexicoCanada.getResult(), spainBrazil.getResult(), germanyFrance.getResult(), uruguayItaly.getResult(), argentinaAustralia.getResult()),
-                scoreboard.getSummary());
+    private void logMatches() {
+        System.out.println(mexicoCanada.getSequenceNumber() + " " + mexicoCanada.getResult().totalScore());
+        System.out.println(spainBrazil.getSequenceNumber() + " " + spainBrazil.getResult().totalScore());
+        System.out.println(germanyFrance.getSequenceNumber() + " " + germanyFrance.getResult().totalScore());
+        System.out.println(uruguayItaly.getSequenceNumber() + " " + uruguayItaly.getResult().totalScore());
+        System.out.println(argentinaAustralia.getSequenceNumber() + " " + argentinaAustralia.getResult().totalScore());
     }
 
 }

@@ -8,19 +8,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Scoreboard {
     private static final AtomicInteger matchSequence = new AtomicInteger();
     private final Set<Match.Team> teams;
-    private final Set<Match> matches;
+    private final List<Match> matches;
 
     public Scoreboard() {
         teams = new HashSet<>();
-        matches = new HashSet<>();
+        matches = new LinkedList<>();
     }
 
     public void newMatch(Match match) {
         try {
-            addMatch(match);
             var summary = match.getResult();
             addTeam(summary.homeTeam());
             addTeam(summary.awayTeam());
+            addMatch(match);
         } catch (Match.NotModifalbleMatchException e) {
             throw new RuntimeException(e);
         }
@@ -28,7 +28,7 @@ public class Scoreboard {
 
     public List<Match.Result> getSummary() {
         return matches.stream()
-                .sorted(Comparator.comparing(Match::getSequenceNumber))
+                .sorted(totalScoreThenSeqenceNoComparator)
                 .map(Match::getResult)
                 .toList();
     }
@@ -39,8 +39,26 @@ public class Scoreboard {
     }
 
     private void addMatch(Match match) throws Match.NotModifalbleMatchException {
-        if (matches.contains(match)) throw new AssertionError("Team " + match.getDescription() + " already exists");
         match.begin(matchSequence.getAndIncrement());
         matches.add(match);
     }
+
+    private static int getTotalScore(Match match) {
+        return match.getResult().totalScore();
+    }
+
+    private static Comparator<Match> totalScoreThenSeqenceNoComparator = (Match m1, Match m2) -> {
+        var m1TotalScore = getTotalScore(m1);
+        var m2TotalScore = getTotalScore(m2);
+        var m1SequenceNumber = m1.getSequenceNumber();
+        var m2SequenceNumber = m2.getSequenceNumber();
+
+        if (m1TotalScore != m2TotalScore) {
+            return m2TotalScore - m1TotalScore;
+        } else {
+            return Long.compare(m2SequenceNumber, m1SequenceNumber);
+        }
+    };
+
+
 }
