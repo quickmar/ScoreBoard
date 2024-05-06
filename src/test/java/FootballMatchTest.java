@@ -67,7 +67,7 @@ public class FootballMatchTest {
         match.finish();
 
         Assertions.assertEquals(Match.Status.FINISHED, match.getStatus());
-        verify(handler, times(1)).finalize(any(Match.class));
+        verify(handler, times(1)).onFinish(any(Match.class));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class FootballMatchTest {
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
 
         Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
-        verify(handler, times(1)).finalize(any(Match.class));
+        verify(handler, times(1)).onFinish(any(Match.class));
     }
 
     @Test

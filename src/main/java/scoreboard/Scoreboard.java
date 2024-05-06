@@ -40,7 +40,7 @@ public class Scoreboard implements Match.MatchChangeHandler {
     }
 
     @Override
-    public void finalize(Match match) {
+    public void onFinish(Match match) {
         var result = match.getResult();
         teams.remove(result.homeTeam());
         teams.remove(result.awayTeam());

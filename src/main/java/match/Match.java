@@ -27,7 +27,7 @@ public interface Match {
          *
          * @param match {@link Match} witch is finalizing
          */
-        void finalize(Match match);
+        void onFinish(Match match);
     }
 
     /**
