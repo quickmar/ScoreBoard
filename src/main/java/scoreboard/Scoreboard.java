@@ -21,7 +21,10 @@ public class Scoreboard implements Match.MatchChangeHandler {
         var sequence = new AtomicInteger();
         return matches.stream()
                 .map((match -> new MatchWithIndex(sequence.getAndIncrement(), match)))
-                .sorted(totalScoreThenSeqenceNoComparator)
+                .sorted(Comparator
+                        .comparing(Scoreboard::getTotalScore)
+                        .thenComparing(MatchWithIndex::index)
+                        .reversed())
                 .map(MatchWithIndex::match)
                 .map(Match::getResult)
                 .toList();
@@ -56,20 +59,7 @@ public class Scoreboard implements Match.MatchChangeHandler {
         matches.addLast(match);
     }
 
-    private static int getTotalScore(Match match) {
-        return match.getResult().totalScore();
+    private static int getTotalScore(MatchWithIndex matchWithIndex) {
+        return matchWithIndex.match().getResult().totalScore();
     }
-
-    private static final Comparator<MatchWithIndex> totalScoreThenSeqenceNoComparator = (MatchWithIndex m1, MatchWithIndex m2) -> {
-        var m1TotalScore = getTotalScore(m1.match());
-        var m2TotalScore = getTotalScore(m2.match());
-        var m1SequenceNumber = m1.index();
-        var m2SequenceNumber = m2.index();
-
-        if (m1TotalScore != m2TotalScore) {
-            return m2TotalScore - m1TotalScore;
-        } else {
-            return Long.compare(m2SequenceNumber, m1SequenceNumber);
-        }
-    };
 }
