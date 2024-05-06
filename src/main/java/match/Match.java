@@ -7,27 +7,8 @@ package match;
  */
 public interface Match {
 
-    static FootballMatch createFootballMatch(Team homeTeam, Team awayTeam, Match.MatchChangeHandler handler) {
+    static FootballMatch createFootballMatch(Team homeTeam, Team awayTeam, MatchChangeHandler handler) {
         return new FootballMatch(new ResultBar(homeTeam, awayTeam), handler);
-    }
-
-    /**
-     * Handler that let handel notification when this {@link Match} is finish.
-     */
-    interface MatchChangeHandler {
-        /**
-         * Called by given {@link Match} when it is beginning
-         *
-         * @param match {@link Match} witch has been begun
-         */
-        void onBegin(Match match);
-
-        /**
-         * Called by given {@link Match} when it is finished
-         *
-         * @param match {@link Match} witch is finalizing
-         */
-        void onFinish(Match match);
     }
 
     /**

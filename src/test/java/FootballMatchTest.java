@@ -1,5 +1,6 @@
 import match.FootballMatch;
 import match.Match;
+import match.MatchChangeHandler;
 import match.ResultBar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,7 +16,7 @@ public class FootballMatchTest {
 
     private Match match;
     private ResultBar resultBar;
-    private Match.MatchChangeHandler handler;
+    private MatchChangeHandler handler;
 
     @BeforeAll
     public static void beforeAll() {
@@ -26,7 +27,7 @@ public class FootballMatchTest {
     @BeforeEach
     public void beforeEach() {
         resultBar = mock(ResultBar.class);
-        handler = mock(Match.MatchChangeHandler.class);
+        handler = mock(MatchChangeHandler.class);
         match = new FootballMatch(resultBar, handler);
     }
 

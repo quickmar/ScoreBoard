@@ -1,11 +1,12 @@
 package scoreboard;
 
 import match.Match;
+import match.MatchChangeHandler;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Scoreboard implements Match.MatchChangeHandler {
+public class Scoreboard implements MatchChangeHandler {
     private record MatchWithIndex(int index, Match match) {
     }
 
