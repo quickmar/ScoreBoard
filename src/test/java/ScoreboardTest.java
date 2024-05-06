@@ -1,5 +1,6 @@
 import match.Match;
 import match.NotModifalbleMatchException;
+import match.Team;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +22,11 @@ public class ScoreboardTest {
     @BeforeEach
     public void beforeEach() {
         scoreboard = new Scoreboard();
-        uruguayItaly = Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("Italy"), scoreboard);
-        spainBrazil = Match.createFootballMatch(new Match.Team("Spain"), new Match.Team("Brazil"), scoreboard);
-        mexicoCanada = Match.createFootballMatch(new Match.Team("Mexico"), new Match.Team("Canada"), scoreboard);
-        argentinaAustralia = Match.createFootballMatch(new Match.Team("Argentina"), new Match.Team("Australia"), scoreboard);
-        germanyFrance = Match.createFootballMatch(new Match.Team("Germany"), new Match.Team("France"), scoreboard);
+        uruguayItaly = Match.createFootballMatch(new Team("Uruguay"), new Team("Italy"), scoreboard);
+        spainBrazil = Match.createFootballMatch(new Team("Spain"), new Team("Brazil"), scoreboard);
+        mexicoCanada = Match.createFootballMatch(new Team("Mexico"), new Team("Canada"), scoreboard);
+        argentinaAustralia = Match.createFootballMatch(new Team("Argentina"), new Team("Australia"), scoreboard);
+        germanyFrance = Match.createFootballMatch(new Team("Germany"), new Team("France"), scoreboard);
     }
 
     @Test
@@ -34,8 +35,8 @@ public class ScoreboardTest {
 
         when(newMatch.getResult())
                 .thenReturn(new Match.Result(
-                        new Match.Team("Home Team"),
-                        new Match.Team("Away Team"), 0, 0));
+                        new Team("Home Team"),
+                        new Team("Away Team"), 0, 0));
 
         Assertions.assertDoesNotThrow(() -> scoreboard.onBegin(newMatch));
     }
@@ -52,7 +53,7 @@ public class ScoreboardTest {
     public void shouldThrowWhenTeamExist() throws NotModifalbleMatchException {
         uruguayItaly.begin();
 
-        Assertions.assertThrows(AssertionError.class, () -> Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("US"), scoreboard).begin());
+        Assertions.assertThrows(AssertionError.class, () -> Match.createFootballMatch(new Team("Uruguay"), new Team("US"), scoreboard).begin());
     }
 
     @Test

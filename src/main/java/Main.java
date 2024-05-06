@@ -1,5 +1,6 @@
 import match.Match;
 import match.NotModifalbleMatchException;
+import match.Team;
 import scoreboard.Scoreboard;
 
 
@@ -7,11 +8,11 @@ public class Main {
     public static void main(String[] args) throws NotModifalbleMatchException {
         var scoreboard = new Scoreboard();
 
-        var uruguayItaly = Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("Italy"), scoreboard);
-        var spainBrazil = Match.createFootballMatch(new Match.Team("Spain"), new Match.Team("Brazil"), scoreboard);
-        var mexicoCanada = Match.createFootballMatch(new Match.Team("Mexico"), new Match.Team("Canada"), scoreboard);
-        var argentinaAustralia = Match.createFootballMatch(new Match.Team("Argentina"), new Match.Team("Australia"), scoreboard);
-        var germanyFrance = Match.createFootballMatch(new Match.Team("Germany"), new Match.Team("France"), scoreboard);
+        var uruguayItaly = Match.createFootballMatch(new Team("Uruguay"), new Team("Italy"), scoreboard);
+        var spainBrazil = Match.createFootballMatch(new Team("Spain"), new Team("Brazil"), scoreboard);
+        var mexicoCanada = Match.createFootballMatch(new Team("Mexico"), new Team("Canada"), scoreboard);
+        var argentinaAustralia = Match.createFootballMatch(new Team("Argentina"), new Team("Australia"), scoreboard);
+        var germanyFrance = Match.createFootballMatch(new Team("Germany"), new Team("France"), scoreboard);
 
         mexicoCanada.begin();
         spainBrazil.begin();

@@ -10,14 +10,6 @@ public interface Match {
     static FootballMatch createFootballMatch(Team homeTeam, Team awayTeam, MatchChangeHandler handler) {
         return new FootballMatch(new ResultBar(homeTeam, awayTeam), handler);
     }
-    
-    /**
-     * Represents a Football Team
-     *
-     * @param name Name of the team
-     */
-    record Team(String name) {
-    }
 
     /**
      * Represents a current state of the result of the {@link Match}

@@ -6,16 +6,16 @@ package match;
 public class ResultBar {
     private int homeTeamScore;
     private int awayTeamScore;
-    private final Match.Team homeTeam;
-    private final Match.Team awayTeam;
+    private final Team homeTeam;
+    private final Team awayTeam;
 
     /**
      * Creates new {@link ResultBar}.
      *
-     * @param homeTeam {@link Match.Team} which is playing on it own ground
-     * @param awayTeam {@link  Match.Team} playing away from its home ground
+     * @param homeTeam {@link Team} which is playing on it own ground
+     * @param awayTeam {@link  Team} playing away from its home ground
      */
-    public ResultBar(Match.Team homeTeam, Match.Team awayTeam) {
+    public ResultBar(Team homeTeam, Team awayTeam) {
         this.awayTeam = awayTeam;
         this.homeTeam = homeTeam;
         this.homeTeamScore = 0;

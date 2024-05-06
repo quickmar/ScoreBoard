@@ -3,6 +3,7 @@ package scoreboard;
 import match.Match;
 import match.MatchChangeHandler;
 import match.NotModifalbleMatchException;
+import match.Team;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,7 +12,7 @@ public class Scoreboard implements MatchChangeHandler {
     private record MatchWithIndex(int index, Match match) {
     }
 
-    private final Set<Match.Team> teams;
+    private final Set<Team> teams;
     private final List<Match> matches;
 
     public Scoreboard() {
@@ -52,7 +53,7 @@ public class Scoreboard implements MatchChangeHandler {
         matches.remove(match);
     }
 
-    private void addTeam(Match.Team team) {
+    private void addTeam(Team team) {
         if (teams.contains(team)) throw new AssertionError("Team " + team.name() + " already exists");
         teams.add(team);
     }

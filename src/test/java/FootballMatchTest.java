@@ -8,8 +8,8 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 public class FootballMatchTest {
-    private static Match.Team HOME_TEAM;
-    private static Match.Team AWAY_TEAM;
+    private static Team HOME_TEAM;
+    private static Team AWAY_TEAM;
 
     private Match match;
     private ResultBar resultBar;
@@ -17,8 +17,8 @@ public class FootballMatchTest {
 
     @BeforeAll
     public static void beforeAll() {
-        HOME_TEAM = new Match.Team("Home Team");
-        AWAY_TEAM = new Match.Team("Away Team");
+        HOME_TEAM = new Team("Home Team");
+        AWAY_TEAM = new Team("Away Team");
     }
 
     @BeforeEach

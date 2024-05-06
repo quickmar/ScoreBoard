@@ -1,20 +1,21 @@
 import match.Match;
 import match.ResultBar;
+import match.Team;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ResultBarTest {
-    private static Match.Team HOME_TEAM;
-    private static Match.Team AWAY_TEAM;
+    private static Team HOME_TEAM;
+    private static Team AWAY_TEAM;
 
     private ResultBar resultBar;
 
     @BeforeAll
     public static void beforeAll() {
-        HOME_TEAM = new Match.Team("Home Team");
-        AWAY_TEAM = new Match.Team("Away Team");
+        HOME_TEAM = new Team("Home Team");
+        AWAY_TEAM = new Team("Away Team");
     }
 
     @BeforeEach
