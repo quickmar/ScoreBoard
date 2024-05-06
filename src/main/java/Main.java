@@ -2,17 +2,18 @@ import match.Match;
 import match.NotModifalbleMatchException;
 import match.Team;
 import scoreboard.Scoreboard;
+import scoreboards.Scoreboards;
 
 
 public class Main {
     public static void main(String[] args) throws NotModifalbleMatchException {
-        var scoreboard = new Scoreboard();
+        var factory = Scoreboards.createFactory();
 
-        var uruguayItaly = Match.createFootballMatch(new Team("Uruguay"), new Team("Italy"), scoreboard);
-        var spainBrazil = Match.createFootballMatch(new Team("Spain"), new Team("Brazil"), scoreboard);
-        var mexicoCanada = Match.createFootballMatch(new Team("Mexico"), new Team("Canada"), scoreboard);
-        var argentinaAustralia = Match.createFootballMatch(new Team("Argentina"), new Team("Australia"), scoreboard);
-        var germanyFrance = Match.createFootballMatch(new Team("Germany"), new Team("France"), scoreboard);
+        var uruguayItaly = factory.createFootballMatch("Uruguay", "Italy");
+        var spainBrazil = factory.createFootballMatch("Spain", "Brazil");
+        var mexicoCanada = factory.createFootballMatch("Mexico", "Canada");
+        var argentinaAustralia = factory.createFootballMatch("Argentina", "Australia");
+        var germanyFrance = factory.createFootballMatch("Germany", "France");
 
         mexicoCanada.begin();
         spainBrazil.begin();
@@ -27,6 +28,6 @@ public class Main {
         argentinaAustralia.updateScore(3, 1);
         germanyFrance.updateScore(2, 2);
 
-        scoreboard.getSummary().stream().map(Match.Result::description).forEach(System.out::println);
+        factory.getScoreboard().getSummary().stream().map(Match.Result::description).forEach(System.out::println);
     }
 }

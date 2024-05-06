@@ -7,10 +7,6 @@ package match;
  */
 public interface Match {
 
-    static FootballMatch createFootballMatch(Team homeTeam, Team awayTeam, MatchChangeHandler handler) {
-        return new FootballMatch(new ResultBar(homeTeam, awayTeam), handler);
-    }
-
     /**
      * Represents a current state of the result of the {@link Match}
      *

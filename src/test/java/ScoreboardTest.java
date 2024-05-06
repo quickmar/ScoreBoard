@@ -1,5 +1,6 @@
 import match.Match;
 import match.NotModifalbleMatchException;
+import match.ResultBar;
 import match.Team;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,11 +9,13 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 
 import scoreboard.Scoreboard;
+import scoreboards.Scoreboards;
 
 import java.util.List;
 
 public class ScoreboardTest {
     private Scoreboard scoreboard;
+    private Scoreboards.ScoreBoardFactory factory;
     private Match uruguayItaly;
     private Match spainBrazil;
     private Match mexicoCanada;
@@ -21,12 +24,13 @@ public class ScoreboardTest {
 
     @BeforeEach
     public void beforeEach() {
-        scoreboard = new Scoreboard();
-        uruguayItaly = Match.createFootballMatch(new Team("Uruguay"), new Team("Italy"), scoreboard);
-        spainBrazil = Match.createFootballMatch(new Team("Spain"), new Team("Brazil"), scoreboard);
-        mexicoCanada = Match.createFootballMatch(new Team("Mexico"), new Team("Canada"), scoreboard);
-        argentinaAustralia = Match.createFootballMatch(new Team("Argentina"), new Team("Australia"), scoreboard);
-        germanyFrance = Match.createFootballMatch(new Team("Germany"), new Team("France"), scoreboard);
+        factory = Scoreboards.createFactory();
+        scoreboard = factory.getScoreboard();
+        uruguayItaly = factory.createFootballMatch("Uruguay", "Italy");
+        spainBrazil = factory.createFootballMatch("Spain", "Brazil");
+        mexicoCanada = factory.createFootballMatch("Mexico", "Canada");
+        argentinaAustralia = factory.createFootballMatch("Argentina", "Australia");
+        germanyFrance = factory.createFootballMatch("Germany", "France");
     }
 
     @Test
@@ -53,7 +57,7 @@ public class ScoreboardTest {
     public void shouldThrowWhenTeamExist() throws NotModifalbleMatchException {
         uruguayItaly.begin();
 
-        Assertions.assertThrows(AssertionError.class, () -> Match.createFootballMatch(new Team("Uruguay"), new Team("US"), scoreboard).begin());
+        Assertions.assertThrows(AssertionError.class, () -> factory.createFootballMatch("Uruguay", "US").begin());
     }
 
     @Test
