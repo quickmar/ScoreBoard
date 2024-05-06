@@ -1,4 +1,5 @@
 import match.Match;
+import match.NotModifalbleMatchException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,21 +42,21 @@ public class ScoreboardTest {
 
 
     @Test
-    public void shouldThrowWhenMatchExist() throws Match.NotModifalbleMatchException {
+    public void shouldThrowWhenMatchExist() throws NotModifalbleMatchException {
         uruguayItaly.begin();
 
-        Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> uruguayItaly.begin());
+        Assertions.assertThrows(NotModifalbleMatchException.class, () -> uruguayItaly.begin());
     }
 
     @Test
-    public void shouldThrowWhenTeamExist() throws Match.NotModifalbleMatchException {
+    public void shouldThrowWhenTeamExist() throws NotModifalbleMatchException {
         uruguayItaly.begin();
 
         Assertions.assertThrows(AssertionError.class, () -> Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("US"), scoreboard).begin());
     }
 
     @Test
-    public void shouldRemoveTeamWhenMatchFinished() throws Match.NotModifalbleMatchException {
+    public void shouldRemoveTeamWhenMatchFinished() throws NotModifalbleMatchException {
         initialiseMatches();
 
         uruguayItaly.finish();
@@ -76,7 +77,7 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void shouldSummariseMatchesByTotalScore() throws Match.NotModifalbleMatchException {
+    public void shouldSummariseMatchesByTotalScore() throws NotModifalbleMatchException {
         initialiseMatches();
 
         uruguayItaly.updateScore(2, 1);
@@ -90,7 +91,7 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void shouldSummariseMatchesByTotalScoreAndMostRecent() throws Match.NotModifalbleMatchException {
+    public void shouldSummariseMatchesByTotalScoreAndMostRecent() throws NotModifalbleMatchException {
         initialiseMatches();
 
         uruguayItaly.updateScore(6, 6);
@@ -113,7 +114,7 @@ public class ScoreboardTest {
             germanyFrance.begin();
             uruguayItaly.begin();
             argentinaAustralia.begin();
-        } catch (Match.NotModifalbleMatchException e) {
+        } catch (NotModifalbleMatchException e) {
             Assertions.fail(e);
         }
     }

@@ -1,7 +1,4 @@
-import match.FootballMatch;
-import match.Match;
-import match.MatchChangeHandler;
-import match.ResultBar;
+import match.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +29,7 @@ public class FootballMatchTest {
     }
 
     @Test
-    public void shouldUpdatesScore() throws Match.NotModifalbleMatchException {
+    public void shouldUpdatesScore() throws NotModifalbleMatchException {
         match.begin();
 
         match.updateScore(1, 1);
@@ -45,7 +42,7 @@ public class FootballMatchTest {
     public void shouldThrowWhenUpdatesScoreOnNotStartedMatch() {
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
 
-        Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
+        Assertions.assertThrows(NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
     }
 
     @Test
@@ -54,7 +51,7 @@ public class FootballMatchTest {
     }
 
     @Test
-    public void shouldBeginMatch() throws Match.NotModifalbleMatchException {
+    public void shouldBeginMatch() throws NotModifalbleMatchException {
         match.begin();
 
         Assertions.assertEquals(Match.Status.RUNNING, match.getStatus());
@@ -62,7 +59,7 @@ public class FootballMatchTest {
     }
 
     @Test
-    public void shouldFishTheMatch() throws Match.NotModifalbleMatchException {
+    public void shouldFishTheMatch() throws NotModifalbleMatchException {
         match.begin();
 
         match.finish();
@@ -75,17 +72,17 @@ public class FootballMatchTest {
     public void shouldNotUpdateScoreBeforeBegin() {
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
 
-        Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
+        Assertions.assertThrows(NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
     }
 
     @Test
-    public void shouldNotUpdateScoreAfterFinish() throws Match.NotModifalbleMatchException {
+    public void shouldNotUpdateScoreAfterFinish() throws NotModifalbleMatchException {
         match.begin();
 
         match.finish();
         when(resultBar.getResultSummary()).thenReturn(new Match.Result(HOME_TEAM, AWAY_TEAM, 0, 0));
 
-        Assertions.assertThrows(Match.NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
+        Assertions.assertThrows(NotModifalbleMatchException.class, () -> match.updateScore(1, 1));
         verify(handler, times(1)).onFinish(any(Match.class));
     }
 

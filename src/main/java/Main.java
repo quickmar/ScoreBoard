@@ -1,9 +1,10 @@
 import match.Match;
+import match.NotModifalbleMatchException;
 import scoreboard.Scoreboard;
 
 
 public class Main {
-    public static void main(String[] args) throws Match.NotModifalbleMatchException {
+    public static void main(String[] args) throws NotModifalbleMatchException {
         var scoreboard = new Scoreboard();
 
         var uruguayItaly = Match.createFootballMatch(new Match.Team("Uruguay"), new Match.Team("Italy"), scoreboard);

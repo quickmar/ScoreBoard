@@ -2,6 +2,7 @@ package scoreboard;
 
 import match.Match;
 import match.MatchChangeHandler;
+import match.NotModifalbleMatchException;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,7 +39,7 @@ public class Scoreboard implements MatchChangeHandler {
             addTeam(summary.homeTeam());
             addTeam(summary.awayTeam());
             addMatch(match);
-        } catch (Match.NotModifalbleMatchException e) {
+        } catch (NotModifalbleMatchException e) {
             throw new RuntimeException(e);
         }
     }
@@ -56,7 +57,7 @@ public class Scoreboard implements MatchChangeHandler {
         teams.add(team);
     }
 
-    private void addMatch(Match match) throws Match.NotModifalbleMatchException {
+    private void addMatch(Match match) throws NotModifalbleMatchException {
         matches.addLast(match);
     }
 

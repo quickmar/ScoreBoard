@@ -10,16 +10,7 @@ public interface Match {
     static FootballMatch createFootballMatch(Team homeTeam, Team awayTeam, MatchChangeHandler handler) {
         return new FootballMatch(new ResultBar(homeTeam, awayTeam), handler);
     }
-
-    /**
-     * Exception that is thrown whenever state of {@link Match} is changed after it is over.
-     */
-    class NotModifalbleMatchException extends Exception {
-        public NotModifalbleMatchException(Match match) {
-            super("The match: " + match.getResult().description() + " is in status: " + match.getStatus() + " and can not be modified.");
-        }
-    }
-
+    
     /**
      * Represents a Football Team
      *
