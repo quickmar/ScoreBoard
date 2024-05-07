@@ -19,3 +19,17 @@ During the TV broadcast, we can see that there are:
 * **Match** has **Result bar** witch indicates a current result of **teams**
 * For measuring the progress of different matches, additional entity is used. It is indeed the **scoreboard**.
 
+# How to use
+        import scoreboards.Scoreboards;
+
+        ...
+
+        var factory = Scoreboards.createFactory();
+        var scoreboard = factory.getScoreboard();
+        var match = factory.createFootballMatch("Home Team", "Away Team");
+        match.begin();
+        match.updateScore(1, 1);
+        scoreboard.getSummary().forEach(System.out::println);
+        match.finish();
+        scoreboard.getSummary().forEach(System.out::println);
+ 
