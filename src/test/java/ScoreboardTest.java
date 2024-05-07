@@ -33,15 +33,8 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void shouldAddNewMatch() {
-        var newMatch = mock(Match.class);
-
-        when(newMatch.getResult())
-                .thenReturn(new Match.Result(
-                        new Team("Home Team"),
-                        new Team("Away Team"), 0, 0));
-
-        Assertions.assertDoesNotThrow(() -> scoreboard.onBegin(newMatch));
+    public void shouldBeginMatch() {
+        Assertions.assertDoesNotThrow(uruguayItaly::begin);
     }
 
 

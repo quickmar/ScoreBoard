@@ -1,5 +1,6 @@
 package scoreboard;
 
+import match.MatchChangeHandler;
 import scoreboards.NotModifalbleMatchException;
 import match.Team;
 import scoreboards.Match;
@@ -8,7 +9,7 @@ import scoreboards.Scoreboard;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ScoreboardInternal implements Scoreboard {
+public class ScoreboardInternal implements Scoreboard, MatchChangeHandler {
     private record MatchWithIndex(int index, Match match) {
     }
 
