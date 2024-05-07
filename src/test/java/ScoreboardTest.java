@@ -1,11 +1,8 @@
 import scoreboards.Match;
 import scoreboards.NotModifalbleMatchException;
-import match.Team;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.mockito.Mockito.*;
 
 import scoreboards.Scoreboard;
 import scoreboards.Scoreboards;
