@@ -1,5 +1,7 @@
-package match;
+package scoreboards;
 
+
+import match.Team;
 
 /**
  * Definition of the match.

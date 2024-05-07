@@ -1,0 +1,3 @@
+module ScoreBoard {
+    exports scoreboards;
+}

@@ -2,16 +2,15 @@ package scoreboards;
 
 
 import match.FootballMatch;
-import match.Match;
 import match.ResultBar;
 import match.Team;
-import scoreboard.Scoreboard;
+import scoreboard.ScoreboardInternal;
 
 final class ScoreBoardFactoryInternal implements Scoreboards.ScoreBoardFactory {
-    private final Scoreboard scoreboard;
+    private final ScoreboardInternal scoreboard;
 
     public ScoreBoardFactoryInternal() {
-        this.scoreboard = new Scoreboard();
+        this.scoreboard = new ScoreboardInternal();
     }
 
     @Override
@@ -27,27 +26,28 @@ final class ScoreBoardFactoryInternal implements Scoreboards.ScoreBoardFactory {
 }
 
 /**
- * Facade for interaction with {@link Scoreboard} and {@link Match}
+ * Facade for interaction with {@link ScoreboardInternal} and {@link Match}
  */
 public interface Scoreboards {
     /**
-     * Definition of {@link Scoreboard} Factory. Instance of this will construct {@link Scoreboard}.
+     * Definition of {@link ScoreboardInternal} Factory.
+     * Instance of this factory will construct {@link Scoreboard} internally.
      * And is able to provide new {@link Match} associated with {@link Scoreboard}.
      */
     sealed interface ScoreBoardFactory permits ScoreBoardFactoryInternal {
         /**
-         * Gets {@link Scoreboard}
+         * Gets {@link ScoreboardInternal}
          *
-         * @return {@link Scoreboard}
+         * @return {@link ScoreboardInternal}
          */
         Scoreboard getScoreboard();
 
         /**
-         * Creates {@link Match} associated with {@link Scoreboard}
+         * Creates {@link Match} associated with {@link ScoreboardInternal}
          *
          * @param homeTeamName name of a home team
          * @param awayTeamName name of an away team
-         * @return new {@link Match} in {@link match.Match.Status} CREATED
+         * @return new {@link Match} in {@link Match.Status} CREATED
          */
         Match createFootballMatch(String homeTeamName, String awayTeamName);
     }

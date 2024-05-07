@@ -1,5 +1,7 @@
 package match;
 
+import scoreboards.Match;
+
 /**
  * Keeps track of the result of {@link Match} between Home Team and Away Team.
  */

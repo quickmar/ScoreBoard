@@ -1,5 +1,7 @@
 package match;
 
+import scoreboards.Match;
+
 /**
  * Handler that let handel notification when this {@link Match} is finish.
  */

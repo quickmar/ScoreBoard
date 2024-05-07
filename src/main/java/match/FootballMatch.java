@@ -1,5 +1,8 @@
 package match;
 
+import scoreboards.Match;
+import scoreboards.NotModifalbleMatchException;
+
 public class FootballMatch implements Match {
     private Status status;
     private final ResultBar resultBar;

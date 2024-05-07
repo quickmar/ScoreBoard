@@ -1,4 +1,4 @@
-import match.Match;
+import scoreboards.Match;
 import match.ResultBar;
 import match.Team;
 import org.junit.jupiter.api.Assertions;

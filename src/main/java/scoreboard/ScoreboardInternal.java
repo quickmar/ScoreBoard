@@ -1,31 +1,32 @@
 package scoreboard;
 
-import match.Match;
-import match.MatchChangeHandler;
-import match.NotModifalbleMatchException;
+import scoreboards.NotModifalbleMatchException;
 import match.Team;
+import scoreboards.Match;
+import scoreboards.Scoreboard;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Scoreboard implements MatchChangeHandler {
+public class ScoreboardInternal implements Scoreboard {
     private record MatchWithIndex(int index, Match match) {
     }
 
     private final Set<Team> teams;
     private final List<Match> matches;
 
-    public Scoreboard() {
+    public ScoreboardInternal() {
         teams = new HashSet<>();
         matches = new LinkedList<>();
     }
 
+    @Override
     public List<Match.Result> getSummary() {
         var sequence = new AtomicInteger();
         return matches.stream()
                 .map((match -> new MatchWithIndex(sequence.getAndIncrement(), match)))
                 .sorted(Comparator
-                        .comparing(Scoreboard::getTotalScore)
+                        .comparing(ScoreboardInternal::getTotalScore)
                         .thenComparing(MatchWithIndex::index)
                         .reversed())
                 .map(MatchWithIndex::match)

@@ -1,4 +1,4 @@
-package match;
+package scoreboards;
 
 /**
  * Exception that is thrown whenever state of {@link Match} is changed after it is over.
